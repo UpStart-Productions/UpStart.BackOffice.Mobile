@@ -1,0 +1,22 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button [defaultHref]="'/tabs/invoices/' + invoiceId"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Invoice PDF</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  @if (loading()) {
+    <div class="center-state">
+      <ion-spinner name="crescent"></ion-spinner>
+    </div>
+  } @else if (error()) {
+    <div class="center-state">
+      <ion-text color="danger">Could not load the PDF.</ion-text>
+    </div>
+  } @else if (pdfUrl()) {
+    <iframe class="pdf-frame" [src]="pdfUrl()" title="Invoice PDF"></iframe>
+  }
+</ion-content>

@@ -1,0 +1,46 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Clients</ion-title>
+  </ion-toolbar>
+  <ion-toolbar>
+    <ion-searchbar
+      [(ngModel)]="query"
+      placeholder="Search clients"
+      [debounce]="150"
+    ></ion-searchbar>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-refresher slot="fixed" (ionRefresh)="load($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+
+  @if (loading() && clients().length === 0) {
+    <div class="loading-state">
+      <ion-spinner name="crescent"></ion-spinner>
+    </div>
+  }
+
+  @if (!loading() && filteredClients().length === 0) {
+    <div class="empty-state">
+      <ion-icon name="business-outline"></ion-icon>
+      <p>No clients found.</p>
+    </div>
+  }
+
+  <ion-list>
+    @for (client of filteredClients(); track client.id) {
+      <ion-item button [routerLink]="['/tabs/clients', client.id]" [class.inactive]="!client.isActive">
+        <ion-label>
+          <h2>{{ client.name }}</h2>
+          <p>{{ client.code }}@if (client.email) { · {{ client.email }} }</p>
+        </ion-label>
+        @if (!client.isActive) {
+          <ion-note slot="end" color="medium">Inactive</ion-note>
+        }
+        <ion-icon slot="end" name="chevron-forward-outline" color="medium"></ion-icon>
+      </ion-item>
+    }
+  </ion-list>
+</ion-content>

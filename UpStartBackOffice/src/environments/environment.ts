@@ -1,0 +1,27 @@
+// This file can be replaced during build by using the `fileReplacements` array.
+// `ng build` replaces `environment.ts` with `environment.prod.ts`.
+// The list of file replacements can be found in `angular.json`.
+
+export const environment = {
+  production: false,
+  // iOS Simulator: 'localhost' resolves to your Mac, so this works as-is.
+  // Physical device: replace 'localhost' with your Mac's LAN IP (System
+  // Settings > Wi-Fi > Details, or `ipconfig getifaddr en0` in Terminal),
+  // e.g. 'http://192.168.1.42:3001/api'. Your phone and Mac must be on the
+  // same network and `npm run dev` must be running in UpStart.BackOffice.
+  apiBaseUrl: 'http://localhost:3001/api',
+  cognito: {
+    userPoolId: 'us-west-2_IlJRXdK5X',
+    userPoolClientId: '5oi5vfbt574mqect5psnqkqabn',
+    region: 'us-west-2',
+  },
+};
+
+/*
+ * For easier debugging in development mode, you can import the following file
+ * to ignore zone related error stack frames such as `zone.run`, `zoneDelegate.invokeTask`.
+ *
+ * This import should be commented out in production mode because it will have a negative impact
+ * on performance if an error is thrown.
+ */
+// import 'zone.js/plugins/zone-error';  // Included with Angular CLI.

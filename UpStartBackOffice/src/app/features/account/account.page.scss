@@ -1,0 +1,41 @@
+.profile-card {
+  margin: 12px;
+  text-align: center;
+
+  ion-avatar {
+    width: 72px;
+    height: 72px;
+    margin: 0 auto 12px;
+    background: var(--ion-color-step-100, #eeeeec);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    ion-icon {
+      font-size: 56px;
+      color: var(--ubo-text-muted);
+    }
+  }
+
+  h1 {
+    font-size: 18px;
+    margin: 0;
+  }
+
+  p {
+    margin: 2px 0 0;
+    font-size: 13px;
+    color: var(--ubo-text-muted);
+  }
+}
+
+.env-note {
+  text-align: center;
+  font-size: 11px;
+  color: var(--ubo-text-muted);
+  margin: 16px 0;
+}
+
+.sign-out-wrap {
+  padding: 0 16px 32px;
+}

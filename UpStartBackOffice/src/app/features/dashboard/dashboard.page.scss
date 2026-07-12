@@ -1,0 +1,84 @@
+.greeting {
+  padding: 8px 16px 0;
+
+  h1 {
+    font-size: 22px;
+    font-weight: 700;
+    margin: 0;
+  }
+}
+
+.running-card {
+  margin: 12px;
+  --background: var(--ion-color-secondary);
+  color: #ffffff;
+}
+
+.running-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.elapsed {
+  font-size: 24px;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  margin-top: 4px;
+}
+
+.running-project {
+  font-size: 13px;
+  opacity: 0.8;
+}
+
+.stats-grid {
+  padding: 0 6px;
+}
+
+.stat-card {
+  margin: 6px;
+  text-align: center;
+
+  ion-icon {
+    font-size: 22px;
+    color: var(--ion-color-primary);
+  }
+}
+
+.stat-value {
+  font-size: 22px;
+  font-weight: 700;
+  margin-top: 4px;
+}
+
+.stat-label {
+  font-size: 12px;
+  color: var(--ubo-text-muted);
+}
+
+.invoices-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+
+  ion-icon {
+    font-size: 26px;
+    color: var(--ion-color-primary);
+  }
+}
+
+.invoices-copy {
+  flex: 1;
+
+  .stat-label {
+    margin-top: 2px;
+  }
+}
+
+.quick-actions {
+  padding: 4px 12px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}

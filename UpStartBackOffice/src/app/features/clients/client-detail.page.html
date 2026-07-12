@@ -1,0 +1,84 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/tabs/clients"></ion-back-button>
+    </ion-buttons>
+    <ion-title>{{ client()?.name ?? 'Client' }}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  @if (loading()) {
+    <div class="loading-state">
+      <ion-spinner name="crescent"></ion-spinner>
+    </div>
+  } @else if (client(); as client) {
+    <ion-card>
+      <ion-card-content>
+        <div class="client-heading">
+          <h1>{{ client.name }}</h1>
+          @if (!client.isActive) {
+            <ion-badge color="medium">Inactive</ion-badge>
+          }
+        </div>
+        <ion-note>{{ client.code }}</ion-note>
+
+        <div class="contact-lines">
+          @if (client.email) {
+            <div class="contact-line">
+              <ion-icon name="mail-outline"></ion-icon>
+              <a [href]="'mailto:' + client.email">{{ client.email }}</a>
+            </div>
+          }
+          @if (client.phone) {
+            <div class="contact-line">
+              <ion-icon name="call-outline"></ion-icon>
+              <a [href]="'tel:' + client.phone">{{ client.phone }}</a>
+            </div>
+          }
+          @if (client.website) {
+            <div class="contact-line">
+              <ion-icon name="globe-outline"></ion-icon>
+              <span>{{ client.website }}</span>
+            </div>
+          }
+          @if (addressLine(client)) {
+            <div class="contact-line">
+              <ion-icon name="location-outline"></ion-icon>
+              <span>{{ addressLine(client) }}</span>
+            </div>
+          }
+        </div>
+
+        @if (client.notes) {
+          <p class="notes">{{ client.notes }}</p>
+        }
+      </ion-card-content>
+    </ion-card>
+
+    <ion-list>
+      <ion-list-header>
+        <ion-label>Projects</ion-label>
+      </ion-list-header>
+
+      @if (projects().length === 0) {
+        <ion-item lines="none">
+          <ion-icon slot="start" name="folder-open-outline" color="medium"></ion-icon>
+          <ion-label color="medium">No projects yet.</ion-label>
+        </ion-item>
+      }
+
+      @for (project of projects(); track project.id) {
+        <ion-item button [routerLink]="['/tabs/clients', clientId, 'projects', project.id]">
+          <ion-label>
+            <h2>{{ project.name }}</h2>
+            @if (!project.isActive) {
+              <p>Inactive</p>
+            }
+          </ion-label>
+          <ion-icon slot="end" name="chevron-forward-outline" color="medium"></ion-icon>
+        </ion-item>
+      }
+    </ion-list>
+  }
+</ion-content>

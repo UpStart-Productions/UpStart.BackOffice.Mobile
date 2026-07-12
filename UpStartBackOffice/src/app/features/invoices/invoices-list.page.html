@@ -1,0 +1,48 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Invoices</ion-title>
+  </ion-toolbar>
+  <ion-toolbar>
+    <ion-segment [value]="filter()" (ionChange)="onFilterChange($any($event.detail.value))" scrollable>
+      <ion-segment-button value="ALL"><ion-label>All</ion-label></ion-segment-button>
+      <ion-segment-button value="DRAFT"><ion-label>Draft</ion-label></ion-segment-button>
+      <ion-segment-button value="SENT"><ion-label>Sent</ion-label></ion-segment-button>
+      <ion-segment-button value="PAID"><ion-label>Paid</ion-label></ion-segment-button>
+      <ion-segment-button value="VOID"><ion-label>Void</ion-label></ion-segment-button>
+    </ion-segment>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-refresher slot="fixed" (ionRefresh)="load($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+
+  @if (loading() && invoices().length === 0) {
+    <div class="loading-state">
+      <ion-spinner name="crescent"></ion-spinner>
+    </div>
+  }
+
+  @if (!loading() && filteredInvoices().length === 0) {
+    <div class="empty-state">
+      <ion-icon name="document-text-outline"></ion-icon>
+      <p>No invoices here.</p>
+    </div>
+  }
+
+  <ion-list>
+    @for (invoice of filteredInvoices(); track invoice.id) {
+      <ion-item button [routerLink]="['/tabs/invoices', invoice.id]">
+        <ion-label>
+          <h2>{{ invoice.displayNumber }}</h2>
+          <p>{{ invoice.client?.name }}</p>
+        </ion-label>
+        <div slot="end" class="end-col">
+          <div class="amount">{{ invoice.total | number: '1.2-2' }}</div>
+          <ion-badge [color]="statusColor(invoice.status)">{{ invoice.status }}</ion-badge>
+        </div>
+      </ion-item>
+    }
+  </ion-list>
+</ion-content>

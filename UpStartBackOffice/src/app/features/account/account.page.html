@@ -1,0 +1,45 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Account</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  @if (user(); as u) {
+    <ion-card class="profile-card">
+      <ion-card-content>
+        <ion-avatar>
+          @if (u.avatarUrl) {
+            <img [src]="u.avatarUrl" alt="" />
+          } @else {
+            <ion-icon name="person-circle-outline"></ion-icon>
+          }
+        </ion-avatar>
+        <h1>{{ u.name }}</h1>
+        <p>{{ u.email }}</p>
+      </ion-card-content>
+    </ion-card>
+
+    <ion-list inset>
+      <ion-item>
+        <ion-icon slot="start" name="shield-checkmark-outline" color="medium"></ion-icon>
+        <ion-label>Role</ion-label>
+        <ion-note slot="end">{{ u.role }}</ion-note>
+      </ion-item>
+      <ion-item lines="none">
+        <ion-icon slot="start" name="mail-outline" color="medium"></ion-icon>
+        <ion-label>Email</ion-label>
+        <ion-note slot="end">{{ u.email }}</ion-note>
+      </ion-item>
+    </ion-list>
+  }
+
+  <div class="env-note">Connected to {{ apiBaseUrl }}</div>
+
+  <div class="sign-out-wrap">
+    <ion-button expand="block" color="danger" fill="outline" (click)="signOut()">
+      <ion-icon slot="start" name="log-out-outline"></ion-icon>
+      Sign out
+    </ion-button>
+  </div>
+</ion-content>

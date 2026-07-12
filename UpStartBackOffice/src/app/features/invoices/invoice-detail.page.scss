@@ -1,0 +1,42 @@
+.loading-state {
+  display: flex;
+  justify-content: center;
+  padding: 48px 0;
+}
+
+.invoice-heading {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 8px;
+
+  h1 {
+    font-size: 20px;
+    margin: 0 0 2px;
+  }
+}
+
+.date-row {
+  display: flex;
+  gap: 24px;
+  margin: 14px 0 16px;
+
+  .date-label {
+    display: block;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+    color: var(--ubo-text-muted);
+  }
+}
+
+.total-row {
+  --background: var(--ion-color-step-50, #f6f6f5);
+  font-weight: 700;
+}
+
+.notes {
+  font-size: 13px;
+  color: var(--ubo-text-muted);
+  white-space: pre-wrap;
+}

@@ -1,0 +1,21 @@
+.loading-state {
+  display: flex;
+  justify-content: center;
+  padding: 48px 0;
+}
+
+.empty-state {
+  text-align: center;
+  padding: 48px 24px;
+  color: var(--ubo-text-muted);
+
+  ion-icon {
+    font-size: 40px;
+    margin-bottom: 8px;
+    opacity: 0.5;
+  }
+}
+
+.inactive {
+  opacity: 0.55;
+}

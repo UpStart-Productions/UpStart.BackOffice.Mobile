@@ -1,0 +1,67 @@
+// UpStart Back Office brand theme
+// Matches admin/src/assets/layout/variables/_colors.scss
+// For information on how to create your own theme, please refer to:
+// https://ionicframework.com/docs/theming/
+
+:root {
+  /** primary — brand violet **/
+  --ion-color-primary: #7c3aed;
+  --ion-color-primary-rgb: 124, 58, 237;
+  --ion-color-primary-contrast: #ffffff;
+  --ion-color-primary-contrast-rgb: 255, 255, 255;
+  --ion-color-primary-shade: #6d28d9;
+  --ion-color-primary-tint: #8b57ef;
+
+  /** secondary — sidebar navy **/
+  --ion-color-secondary: #1d2b36;
+  --ion-color-secondary-rgb: 29, 43, 54;
+  --ion-color-secondary-contrast: #ffffff;
+  --ion-color-secondary-contrast-rgb: 255, 255, 255;
+  --ion-color-secondary-shade: #19252f;
+  --ion-color-secondary-tint: #33404a;
+
+  /** tertiary — brand lime accent **/
+  --ion-color-tertiary: #c4f547;
+  --ion-color-tertiary-rgb: 196, 245, 71;
+  --ion-color-tertiary-contrast: #1d2b36;
+  --ion-color-tertiary-contrast-rgb: 29, 43, 54;
+  --ion-color-tertiary-shade: #addf3e;
+  --ion-color-tertiary-tint: #cbf759;
+
+  /** success / warning / danger tuned to match admin severities **/
+  --ion-color-success: #2e7d32;
+  --ion-color-success-rgb: 46, 125, 50;
+  --ion-color-success-contrast: #ffffff;
+  --ion-color-success-contrast-rgb: 255, 255, 255;
+  --ion-color-success-shade: #286e2c;
+  --ion-color-success-tint: #438a47;
+
+  --ion-color-warning: #f57c00;
+  --ion-color-warning-rgb: 245, 124, 0;
+  --ion-color-warning-contrast: #ffffff;
+  --ion-color-warning-contrast-rgb: 255, 255, 255;
+  --ion-color-warning-shade: #d86d00;
+  --ion-color-warning-tint: #f68a1a;
+
+  --ion-color-danger: #c62828;
+  --ion-color-danger-rgb: 198, 40, 40;
+  --ion-color-danger-contrast: #ffffff;
+  --ion-color-danger-contrast-rgb: 255, 255, 255;
+  --ion-color-danger-shade: #af2323;
+  --ion-color-danger-tint: #cd3e3e;
+
+  --ion-background-color: #fcfcfb;
+  --ion-background-color-rgb: 252, 252, 251;
+  --ion-text-color: #2d2d2d;
+  --ion-text-color-rgb: 45, 45, 45;
+
+  --ion-color-step-50: #f6f6f5;
+  --ion-color-step-100: #eeeeec;
+  --ion-color-step-150: #e5e5e3;
+  --ion-color-step-200: #dddddb;
+  --ion-toolbar-background: #ffffff;
+  --ion-item-background: #ffffff;
+
+  --ubo-text-muted: #6b6b6b;
+  --ubo-border: #eaeaea;
+}

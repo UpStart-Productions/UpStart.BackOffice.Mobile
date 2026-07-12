@@ -1,0 +1,99 @@
+<ion-content class="login-content" [fullscreen]="true">
+  <div class="login-wrap">
+    <div class="brand">
+      <div class="brand-mark">UB</div>
+      <h1>UpStart Back Office</h1>
+      <p>Sign in with your staff account</p>
+    </div>
+
+    @if (!needsNewPassword()) {
+      <form (ngSubmit)="signIn()">
+        <ion-item class="login-item" fill="outline">
+          <ion-icon slot="start" name="mail-outline"></ion-icon>
+          <ion-input
+            label="Email"
+            labelPlacement="floating"
+            type="email"
+            autocomplete="email"
+            [(ngModel)]="email"
+            name="email"
+            required
+          ></ion-input>
+        </ion-item>
+
+        <ion-item class="login-item" fill="outline">
+          <ion-icon slot="start" name="lock-closed-outline"></ion-icon>
+          <ion-input
+            label="Password"
+            labelPlacement="floating"
+            type="password"
+            autocomplete="current-password"
+            [(ngModel)]="password"
+            name="password"
+            required
+          ></ion-input>
+        </ion-item>
+
+        @if (error()) {
+          <ion-text color="danger" class="error-text">{{ error() }}</ion-text>
+        }
+
+        <ion-button
+          expand="block"
+          type="submit"
+          class="submit-btn"
+          [disabled]="loading() || !email || !password"
+        >
+          @if (loading()) {
+            <ion-spinner name="crescent"></ion-spinner>
+          } @else {
+            Sign in
+          }
+        </ion-button>
+      </form>
+    } @else {
+      <form (ngSubmit)="setNewPassword()">
+        <ion-text class="hint-text">Your account needs a new password before continuing.</ion-text>
+
+        <ion-item class="login-item" fill="outline">
+          <ion-input
+            label="New password"
+            labelPlacement="floating"
+            type="password"
+            [(ngModel)]="newPassword"
+            name="newPassword"
+            required
+          ></ion-input>
+        </ion-item>
+
+        <ion-item class="login-item" fill="outline">
+          <ion-input
+            label="Confirm new password"
+            labelPlacement="floating"
+            type="password"
+            [(ngModel)]="confirmNewPassword"
+            name="confirmNewPassword"
+            required
+          ></ion-input>
+        </ion-item>
+
+        @if (error()) {
+          <ion-text color="danger" class="error-text">{{ error() }}</ion-text>
+        }
+
+        <ion-button
+          expand="block"
+          type="submit"
+          class="submit-btn"
+          [disabled]="loading() || !newPassword || !confirmNewPassword"
+        >
+          @if (loading()) {
+            <ion-spinner name="crescent"></ion-spinner>
+          } @else {
+            Set password &amp; sign in
+          }
+        </ion-button>
+      </form>
+    }
+  </div>
+</ion-content>

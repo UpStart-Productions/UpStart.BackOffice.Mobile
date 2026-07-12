@@ -1,0 +1,37 @@
+.loading-state {
+  display: flex;
+  justify-content: center;
+  padding: 48px 0;
+}
+
+.project-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+
+  h1 {
+    font-size: 20px;
+    margin: 0;
+  }
+}
+
+.description {
+  margin-top: 10px;
+  font-size: 14px;
+  color: var(--ubo-text-muted);
+}
+
+.contact-block {
+  margin-top: 12px;
+  font-size: 13px;
+
+  a {
+    color: var(--ion-color-primary);
+    text-decoration: none;
+  }
+}
+
+ion-button {
+  margin-top: 16px;
+}

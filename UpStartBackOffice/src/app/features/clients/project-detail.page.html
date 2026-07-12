@@ -1,0 +1,76 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button [defaultHref]="'/tabs/clients/' + clientId"></ion-back-button>
+    </ion-buttons>
+    <ion-title>{{ project()?.name ?? 'Project' }}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  @if (loading()) {
+    <div class="loading-state">
+      <ion-spinner name="crescent"></ion-spinner>
+    </div>
+  } @else if (project(); as project) {
+    <ion-card>
+      <ion-card-content>
+        <div class="project-heading">
+          <h1>{{ project.name }}</h1>
+          @if (!project.isActive) {
+            <ion-badge color="medium">Inactive</ion-badge>
+          }
+        </div>
+        @if (project.client) {
+          <ion-note>{{ project.client.name }}</ion-note>
+        }
+
+        @if (project.description) {
+          <p class="description">{{ project.description }}</p>
+        }
+
+        @if (project.contactFirstName || project.contactEmail || project.contactPhone) {
+          <div class="contact-block">
+            <strong>
+              {{ project.contactFirstName }} {{ project.contactLastName }}
+            </strong>
+            @if (project.contactEmail) {
+              <div><a [href]="'mailto:' + project.contactEmail">{{ project.contactEmail }}</a></div>
+            }
+            @if (project.contactPhone) {
+              <div><a [href]="'tel:' + project.contactPhone">{{ project.contactPhone }}</a></div>
+            }
+          </div>
+        }
+
+        <ion-button expand="block" (click)="logTime()">
+          <ion-icon slot="start" name="play-outline"></ion-icon>
+          Log time on this project
+        </ion-button>
+      </ion-card-content>
+    </ion-card>
+
+    <ion-list>
+      <ion-list-header>
+        <ion-label>Tasks</ion-label>
+      </ion-list-header>
+
+      @if (!project.tasks || project.tasks.length === 0) {
+        <ion-item lines="none">
+          <ion-icon slot="start" name="time-outline" color="medium"></ion-icon>
+          <ion-label color="medium">No active tasks.</ion-label>
+        </ion-item>
+      }
+
+      @for (task of project.tasks; track task.id) {
+        <ion-item lines="inset">
+          <ion-icon slot="start" name="checkmark-circle-outline" color="medium"></ion-icon>
+          <ion-label>{{ task.name }}</ion-label>
+          @if (!task.isBillable) {
+            <ion-note slot="end">Non-billable</ion-note>
+          }
+        </ion-item>
+      }
+    </ion-list>
+  }
+</ion-content>
