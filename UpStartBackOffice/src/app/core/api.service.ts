@@ -43,4 +43,12 @@ export class ApiService {
   getBlob(path: string): Observable<Blob> {
     return this.http.get(`${this.base}${path}`, { responseType: 'blob' });
   }
+
+  /** Multipart file upload (e.g. receipt photos). Do not set Content-Type —
+   * the browser fills in the multipart boundary automatically for FormData. */
+  postFile<T>(path: string, file: Blob, fileName: string, fieldName = 'file'): Observable<T> {
+    const form = new FormData();
+    form.append(fieldName, file, fileName);
+    return this.http.post<T>(`${this.base}${path}`, form);
+  }
 }

@@ -46,6 +46,21 @@ export const routes: Routes = [
           import('../features/invoices/invoice-pdf.page').then((m) => m.InvoicePdfPage),
       },
       {
+        path: 'expenses',
+        loadComponent: () =>
+          import('../features/expenses/expenses-list.page').then((m) => m.ExpensesListPage),
+      },
+      {
+        path: 'expenses/new',
+        loadComponent: () =>
+          import('../features/expenses/expense-form.page').then((m) => m.ExpenseFormPage),
+      },
+      {
+        path: 'expenses/:id',
+        loadComponent: () =>
+          import('../features/expenses/expense-form.page').then((m) => m.ExpenseFormPage),
+      },
+      {
         path: 'account',
         loadComponent: () => import('../features/account/account.page').then((m) => m.AccountPage),
       },

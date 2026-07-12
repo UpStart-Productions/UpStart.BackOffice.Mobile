@@ -23,6 +23,7 @@ import {
   stopOutline,
   peopleOutline,
   documentTextOutline,
+  receiptOutline,
   timeOutline,
 } from 'ionicons/icons';
 import { forkJoin } from 'rxjs';
@@ -78,7 +79,14 @@ export class DashboardPage implements OnInit, OnDestroy {
     private readonly invoicesService: InvoicesService,
     private readonly router: Router,
   ) {
-    addIcons({ stopwatchOutline, stopOutline, peopleOutline, documentTextOutline, timeOutline });
+    addIcons({
+      stopwatchOutline,
+      stopOutline,
+      peopleOutline,
+      documentTextOutline,
+      receiptOutline,
+      timeOutline,
+    });
   }
 
   ngOnInit(): void {

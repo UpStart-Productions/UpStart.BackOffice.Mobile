@@ -122,3 +122,45 @@ export interface Invoice {
   client?: { id: string; name: string; code: string };
   lineItems?: InvoiceLineItem[];
 }
+
+export interface ExpenseUserRef {
+  id: string;
+  firstName: string | null;
+  lastName: string | null;
+  email: string;
+}
+
+export interface ExpenseProjectRef {
+  id: string;
+  name: string;
+  client?: { id: string; name: string };
+}
+
+export interface Expense {
+  id: string;
+  userId: string;
+  projectId: string | null;
+  description: string;
+  amount: number;
+  category: string | null;
+  incurredAt: string;
+  isReimbursable: boolean;
+  isBillable: boolean;
+  paymentMethod: string | null;
+  receiptUrl: string | null;
+  notes: string | null;
+  createdAt: string;
+  updatedAt: string;
+  user?: ExpenseUserRef;
+  project?: ExpenseProjectRef | null;
+}
+
+export const SUGGESTED_EXPENSE_CATEGORIES = [
+  'Software',
+  'Travel',
+  'Meals',
+  'Supplies',
+  'Contractor',
+  'Advertising',
+  'Other',
+];

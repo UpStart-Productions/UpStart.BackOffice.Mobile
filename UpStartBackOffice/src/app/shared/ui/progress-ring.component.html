@@ -1,0 +1,43 @@
+<div class="progress-ring-container" [style.width.px]="size" [style.height.px]="size">
+  <svg
+    class="progress-ring-svg"
+    [attr.width]="size"
+    [attr.height]="size"
+    [attr.viewBox]="'0 0 ' + size + ' ' + size"
+  >
+    <circle
+      [attr.cx]="size / 2"
+      [attr.cy]="size / 2"
+      [attr.r]="radius"
+      fill="none"
+      [attr.stroke]="backgroundColor"
+      [attr.stroke-width]="strokeWidth"
+      class="progress-ring-background"
+    />
+    <circle
+      [attr.cx]="size / 2"
+      [attr.cy]="size / 2"
+      [attr.r]="radius"
+      fill="none"
+      [attr.stroke]="currentColor"
+      [attr.stroke-width]="strokeWidth"
+      stroke-linecap="round"
+      [style.stroke-dasharray]="circumference"
+      [style.stroke-dashoffset]="strokeDashoffset"
+      [style.transition]="'stroke-dashoffset ' + animationDuration + 'ms ease'"
+      class="progress-ring-progress"
+      transform="rotate(-90)"
+      [attr.transform-origin]="size / 2 + ' ' + size / 2"
+    />
+  </svg>
+
+  @if (centerText) {
+    <div class="progress-ring-center">
+      <span class="center-text">{{ centerText }}</span>
+    </div>
+  }
+
+  <div class="progress-ring-content">
+    <ng-content></ng-content>
+  </div>
+</div>

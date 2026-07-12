@@ -10,6 +10,8 @@ import {
   people,
   documentTextOutline,
   documentText,
+  receiptOutline,
+  receipt,
   personCircleOutline,
   personCircle,
 } from 'ionicons/icons';
@@ -31,6 +33,8 @@ export class TabsPage {
       people,
       documentTextOutline,
       documentText,
+      receiptOutline,
+      receipt,
       personCircleOutline,
       personCircle,
     });

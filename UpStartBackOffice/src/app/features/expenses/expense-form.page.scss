@@ -1,0 +1,42 @@
+.loading-state {
+  display: flex;
+  justify-content: center;
+  padding: 48px 0;
+}
+
+.receipt-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  padding: 20px 16px;
+}
+
+.receipt-preview {
+  --border-radius: 12px;
+  width: 160px;
+  height: 160px;
+
+  img {
+    object-fit: cover;
+  }
+}
+
+.receipt-placeholder {
+  width: 160px;
+  height: 160px;
+  border-radius: 12px;
+  background: var(--ion-color-step-100, #eeeeec);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  ion-icon {
+    font-size: 44px;
+    color: var(--ubo-text-muted);
+  }
+}
+
+.save-wrap {
+  padding: 20px 16px 32px;
+}

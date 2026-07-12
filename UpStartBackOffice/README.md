@@ -8,6 +8,7 @@ Personal iOS companion app for [UpStart Back Office](../../UpStart.BackOffice), 
 - **Time** — start/stop timer, pick project + task, recent entries by day, swipe to delete
 - **Clients** — searchable client list → client detail → project detail → tasks + "log time" shortcut
 - **Invoices** — filter by status, line-item detail, in-app PDF viewer
+- **Expenses** — snap a receipt photo (camera or library), log description/amount/category/project/reimbursable/billable, grouped by month, swipe to delete
 - **Account** — profile from `/users/me`, sign out
 
 Auth is Cognito username/password (SRP), same flow as `admin/src/app/core/cognito-auth.service.ts` — no hosted-UI browser redirect, so there's nothing extra to configure in the Cognito app client.
@@ -53,3 +54,4 @@ The Account tab shows the current `v{version} (build)` from `src/app-version.jso
 - Sign-in uses your existing UpStart Back Office staff account (e.g. `jeff@heyupstart.com`) — same Cognito user pool as the admin app, so the same password works.
 - The `tab1`/`tab2`/`tab3`/`explore-container` folders under `src/app/` are unused leftovers from the initial `ionic start` scaffold — no route references them, safe to delete manually whenever you like (this environment couldn't remove them for you).
 - `capacitor.config.ts` sets `appId: com.heyupstart.backoffice` and `appName: UpStart Back Office` — change before shipping if you'd rather use something else.
+- Receipt photos use `@capacitor/camera` — the first capture on a real device will prompt for camera/photo-library permission (`Info.plist` usage strings already added). Receipt parsing (auto-extracting vendor/amount/date from the photo) was scoped out for v1; the app just attaches the photo you take. The upload is a two-call flow matching the existing API exactly: `POST /expenses` then `POST /expenses/:id/receipt` (multipart) — there's no receipt-parsing endpoint on the backend, so this is pure mobile-side work.

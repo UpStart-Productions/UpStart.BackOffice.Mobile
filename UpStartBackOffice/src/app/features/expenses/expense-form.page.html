@@ -1,0 +1,161 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/tabs/expenses"></ion-back-button>
+    </ion-buttons>
+    <ion-title>{{ isEdit() ? 'Edit Expense' : 'New Expense' }}</ion-title>
+    <ion-buttons slot="end">
+      @if (isEdit()) {
+        <ion-button color="danger" (click)="deleteExpense()">
+          <ion-icon slot="icon-only" name="trash-outline"></ion-icon>
+        </ion-button>
+      }
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  @if (loading()) {
+    <div class="loading-state">
+      <ion-spinner name="crescent"></ion-spinner>
+    </div>
+  } @else {
+    <div class="receipt-section">
+      @if (receiptPreviewUrl(); as preview) {
+        <ion-thumbnail class="receipt-preview">
+          <img [src]="preview" alt="Receipt" />
+        </ion-thumbnail>
+      } @else {
+        <div class="receipt-placeholder">
+          <ion-icon name="receipt-outline"></ion-icon>
+        </div>
+      }
+      <ion-button fill="outline" size="small" (click)="captureReceipt()">
+        <ion-icon slot="start" name="camera-outline"></ion-icon>
+        {{ receiptPreviewUrl() ? 'Retake photo' : 'Add receipt photo' }}
+      </ion-button>
+    </div>
+
+    <ion-item>
+      <ion-input
+        label="Description"
+        labelPlacement="stacked"
+        placeholder="What was this for?"
+        [(ngModel)]="description"
+        name="description"
+        required
+      ></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-input
+        label="Amount"
+        labelPlacement="stacked"
+        type="number"
+        inputmode="decimal"
+        placeholder="0.00"
+        [(ngModel)]="amount"
+        name="amount"
+        required
+      ></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>Date</ion-label>
+      <ion-datetime-button slot="end" datetime="incurredAt"></ion-datetime-button>
+    </ion-item>
+    <ion-modal [keepContentsMounted]="true">
+      <ng-template>
+        <ion-datetime
+          id="incurredAt"
+          presentation="date"
+          [(ngModel)]="incurredAtIso"
+          name="incurredAtPicker"
+        ></ion-datetime>
+      </ng-template>
+    </ion-modal>
+
+    <ion-item>
+      <ion-select
+        label="Category"
+        labelPlacement="stacked"
+        placeholder="Choose a category"
+        [(ngModel)]="category"
+        name="category"
+        interface="action-sheet"
+      >
+        @for (c of categories; track c) {
+          <ion-select-option [value]="c">{{ c }}</ion-select-option>
+        }
+      </ion-select>
+    </ion-item>
+
+    @if (category === 'Other') {
+      <ion-item>
+        <ion-input
+          label="Custom category"
+          labelPlacement="stacked"
+          placeholder="e.g. Parking"
+          [(ngModel)]="customCategory"
+          name="customCategory"
+        ></ion-input>
+      </ion-item>
+    }
+
+    <ion-item>
+      <ion-select
+        label="Project (optional)"
+        labelPlacement="stacked"
+        placeholder="No project"
+        [(ngModel)]="projectId"
+        name="projectId"
+        interface="action-sheet"
+      >
+        <ion-select-option value="">No project</ion-select-option>
+        @for (project of projects(); track project.id) {
+          <ion-select-option [value]="project.id">
+            {{ project.name }} @if (project.client) { — {{ project.client.name }} }
+          </ion-select-option>
+        }
+      </ion-select>
+    </ion-item>
+
+    <ion-item>
+      <ion-input
+        label="Payment method (optional)"
+        labelPlacement="stacked"
+        placeholder="e.g. Personal card"
+        [(ngModel)]="paymentMethod"
+        name="paymentMethod"
+      ></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-toggle [(ngModel)]="isReimbursable" name="isReimbursable">Reimbursable</ion-toggle>
+    </ion-item>
+
+    <ion-item lines="full">
+      <ion-toggle [(ngModel)]="isBillable" name="isBillable">Billable to client</ion-toggle>
+    </ion-item>
+
+    <ion-item>
+      <ion-textarea
+        label="Notes (optional)"
+        labelPlacement="stacked"
+        autoGrow="true"
+        [(ngModel)]="notes"
+        name="notes"
+      ></ion-textarea>
+    </ion-item>
+
+    <div class="save-wrap">
+      <ion-button expand="block" [disabled]="!canSave || saving()" (click)="save()">
+        @if (saving()) {
+          <ion-spinner name="crescent"></ion-spinner>
+        } @else {
+          Save expense
+        }
+      </ion-button>
+    </div>
+  }
+</ion-content>

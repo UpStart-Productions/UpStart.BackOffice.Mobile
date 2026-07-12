@@ -1,0 +1,78 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Expenses</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-refresher slot="fixed" (ionRefresh)="load($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+
+  @if (loading() && expenses().length === 0) {
+    <div class="loading-state">
+      <ion-spinner name="crescent"></ion-spinner>
+    </div>
+  }
+
+  @if (!loading() && expenses().length === 0) {
+    <div class="empty-state">
+      <ion-icon name="receipt-outline"></ion-icon>
+      <p>No expenses in the last 6 months.</p>
+    </div>
+  }
+
+  @for (group of monthGroups(); track group.label) {
+    <ion-list>
+      <ion-item lines="full" class="month-header">
+        <ion-label>{{ group.label }}</ion-label>
+        <ion-note slot="end">{{ group.total | number: '1.2-2' }}</ion-note>
+      </ion-item>
+
+      @for (expense of group.expenses; track expense.id) {
+        <ion-item-sliding #slidingItem>
+          <ion-item button [routerLink]="['/tabs/expenses', expense.id]" lines="inset">
+            <ion-thumbnail slot="start">
+              @if (receiptThumb(expense); as thumb) {
+                <img [src]="thumb" alt="" />
+              } @else {
+                <div class="thumb-placeholder">
+                  <ion-icon name="receipt-outline"></ion-icon>
+                </div>
+              }
+            </ion-thumbnail>
+            <ion-label>
+              <h3>{{ expense.description }}</h3>
+              <p>
+                {{ expense.incurredAt | date: 'mediumDate' }}
+                @if (expense.category) { · {{ expense.category }} }
+              </p>
+              @if (expense.isReimbursable || expense.isBillable) {
+                <div class="tag-row">
+                  @if (expense.isReimbursable) {
+                    <ion-badge color="tertiary">Reimbursable</ion-badge>
+                  }
+                  @if (expense.isBillable) {
+                    <ion-badge color="primary">Billable</ion-badge>
+                  }
+                </div>
+              }
+            </ion-label>
+            <ion-note slot="end">{{ expense.amount | number: '1.2-2' }}</ion-note>
+          </ion-item>
+          <ion-item-options side="end">
+            <ion-item-option color="danger" (click)="deleteExpense(expense, slidingItem)">
+              <ion-icon slot="icon-only" name="trash-outline"></ion-icon>
+            </ion-item-option>
+          </ion-item-options>
+        </ion-item-sliding>
+      }
+    </ion-list>
+  }
+
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+    <ion-fab-button [routerLink]="['/tabs/expenses/new']">
+      <ion-icon name="add-outline"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+</ion-content>

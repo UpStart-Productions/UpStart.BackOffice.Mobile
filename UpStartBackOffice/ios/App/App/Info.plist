@@ -24,6 +24,12 @@
 	<string>$(CURRENT_PROJECT_VERSION)</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
+	<key>NSCameraUsageDescription</key>
+	<string>Used to take photos of receipts when logging expenses.</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>Used to attach a photo of a receipt from your library when logging expenses.</string>
+	<key>NSPhotoLibraryAddUsageDescription</key>
+	<string>Used to save receipt photos you capture to your library.</string>
 	<key>NSAppTransportSecurity</key>
 	<dict>
 		<!-- Dev API runs over plain HTTP on your Mac's LAN — allows localhost,

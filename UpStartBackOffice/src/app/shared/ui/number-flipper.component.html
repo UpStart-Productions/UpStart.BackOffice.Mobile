@@ -1,0 +1,32 @@
+<div class="number-flipper">
+  @for (digit of intDigits; track $index) {
+    <div class="digit" [style.height.px]="digitHeight" [style.width.px]="digitHeight * 0.62">
+      <div class="digit-wrapper" [style.transform]="'translateY(' + -digit * digitHeight + 'px)'">
+        @for (n of digitRange; track n) {
+          <div [class.active]="n === digit" [style.height.px]="digitHeight" [style.lineHeight.px]="digitHeight">
+            {{ n }}
+          </div>
+        }
+      </div>
+    </div>
+  }
+
+  @if (decDigits.length > 0) {
+    <span class="separator" [style.height.px]="digitHeight" [style.lineHeight.px]="digitHeight">.</span>
+    @for (digit of decDigits; track $index) {
+      <div class="digit" [style.height.px]="digitHeight" [style.width.px]="digitHeight * 0.62">
+        <div class="digit-wrapper" [style.transform]="'translateY(' + -digit * digitHeight + 'px)'">
+          @for (n of digitRange; track n) {
+            <div [class.active]="n === digit" [style.height.px]="digitHeight" [style.lineHeight.px]="digitHeight">
+              {{ n }}
+            </div>
+          }
+        </div>
+      </div>
+    }
+  }
+
+  @if (suffix) {
+    <span class="suffix" [style.height.px]="digitHeight" [style.lineHeight.px]="digitHeight">{{ suffix }}</span>
+  }
+</div>
