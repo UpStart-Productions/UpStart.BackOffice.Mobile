@@ -19,6 +19,7 @@ import {
 import { addIcons } from 'ionicons';
 import { logOutOutline, personCircleOutline, mailOutline, shieldCheckmarkOutline } from 'ionicons/icons';
 import { AuthService } from '../../core/auth.service';
+import { AppVersionService } from '../../core/app-version.service';
 import { environment } from '../../../environments/environment';
 
 @Component({
@@ -44,9 +45,11 @@ import { environment } from '../../../environments/environment';
 export class AccountPage {
   readonly user = this.authService.currentUser;
   readonly apiBaseUrl = environment.apiBaseUrl;
+  readonly appVersion = this.appVersionService.snapshot;
 
   constructor(
     private readonly authService: AuthService,
+    private readonly appVersionService: AppVersionService,
     private readonly router: Router,
     private readonly alertController: AlertController,
   ) {

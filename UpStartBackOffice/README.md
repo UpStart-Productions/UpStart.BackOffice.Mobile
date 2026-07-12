@@ -36,6 +36,18 @@ From Xcode, pick a simulator or your connected iPhone (Signing & Capabilities �
 
 For anything pointed at production (`https://api.heyupstart.com/api`, same Cognito pool), use `npm run ios:sync:prod` instead — `environment.prod.ts` is already wired up.
 
+## Versioning and shipping
+
+Build/version/release scripts migrated from the LoveINC mobile app — see [docs/LAUNCH-COMMANDS.md](docs/LAUNCH-COMMANDS.md) for the full command reference. Quick start:
+
+```bash
+npm run version:patch     # bump src/app-version.json + sync Xcode's MARKETING_VERSION/CURRENT_PROJECT_VERSION
+npm run ship:ios          # bump + production build + cap sync + strip live-reload config + open Xcode for Archive
+npm run cap:run:ios:live  # live reload on device/simulator (patches applied automatically via postinstall)
+```
+
+The Account tab shows the current `v{version} (build)` from `src/app-version.json`. A `post-merge` git hook (installed via `npm run setup:git-hooks`) auto-bumps the patch version on every merge to `main`.
+
 ## Notes
 
 - Sign-in uses your existing UpStart Back Office staff account (e.g. `jeff@heyupstart.com`) — same Cognito user pool as the admin app, so the same password works.
