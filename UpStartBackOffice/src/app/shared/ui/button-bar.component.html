@@ -1,0 +1,21 @@
+<div
+  class="button-bar"
+  [style.background]="mergedColors.buttonBarColor"
+  [style.--button-count]="config.buttons.length"
+>
+  <div
+    class="highlight"
+    [style.background]="mergedColors.highlighterColor"
+    [style.left.%]="selectedIndex * (100 / config.buttons.length)"
+  ></div>
+  @for (button of config.buttons; track button.label; let i = $index) {
+    <button
+      type="button"
+      (click)="selectButton(i)"
+      [class.active]="selectedIndex === i"
+      [style.color]="selectedIndex === i ? mergedColors.highlighterLabelColor : mergedColors.labelColor"
+    >
+      {{ button.label }}
+    </button>
+  }
+</div>

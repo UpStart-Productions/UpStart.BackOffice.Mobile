@@ -35,19 +35,31 @@
   <ion-grid class="stats-grid">
     <ion-row>
       <ion-col size="6">
-        <ion-card class="stat-card">
+        <ion-card class="stat-card ring-card">
           <ion-card-content>
-            <ion-icon name="time-outline"></ion-icon>
-            <div class="stat-value">{{ hoursToday() | number: '1.1-1' }}h</div>
+            <app-progress-ring [progress]="todayProgress()" [size]="84" [strokeWidth]="7">
+              <app-number-flipper
+                [value]="hoursToday()"
+                [decimals]="1"
+                suffix="h"
+                [digitHeight]="18"
+              ></app-number-flipper>
+            </app-progress-ring>
             <div class="stat-label">Today</div>
           </ion-card-content>
         </ion-card>
       </ion-col>
       <ion-col size="6">
-        <ion-card class="stat-card">
+        <ion-card class="stat-card ring-card">
           <ion-card-content>
-            <ion-icon name="stopwatch-outline"></ion-icon>
-            <div class="stat-value">{{ hoursWeek() | number: '1.1-1' }}h</div>
+            <app-progress-ring [progress]="weekProgress()" [size]="84" [strokeWidth]="7">
+              <app-number-flipper
+                [value]="hoursWeek()"
+                [decimals]="1"
+                suffix="h"
+                [digitHeight]="18"
+              ></app-number-flipper>
+            </app-progress-ring>
             <div class="stat-label">This week</div>
           </ion-card-content>
         </ion-card>
@@ -60,7 +72,14 @@
       <div class="invoices-row">
         <ion-icon name="document-text-outline"></ion-icon>
         <div class="invoices-copy">
-          <div class="stat-value">{{ openInvoiceTotal() | number: '1.2-2' }}</div>
+          <div class="invoice-total">
+            <span class="currency-sign">$</span>
+            <app-number-flipper
+              [value]="openInvoiceTotal()"
+              [decimals]="2"
+              [digitHeight]="20"
+            ></app-number-flipper>
+          </div>
           <div class="stat-label">
             {{ openInvoiceCount() }} invoice{{ openInvoiceCount() === 1 ? '' : 's' }} sent, awaiting payment
           </div>

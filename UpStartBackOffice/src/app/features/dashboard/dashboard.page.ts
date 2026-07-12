@@ -1,5 +1,4 @@
 import { Component, OnDestroy, OnInit, computed, signal } from '@angular/core';
-import { DecimalPipe } from '@angular/common';
 import { Router } from '@angular/router';
 import {
   IonHeader,
@@ -31,13 +30,19 @@ import { AuthService } from '../../core/auth.service';
 import { TimeEntriesService } from '../../core/time-entries.service';
 import { InvoicesService } from '../../core/invoices.service';
 import { Invoice, TimeEntry } from '../../core/models';
+import { ProgressRingComponent } from '../../shared/ui/progress-ring.component';
+import { NumberFlipperComponent } from '../../shared/ui/number-flipper.component';
+
+/** A "full" day/week for the progress rings — not a real target from the API,
+ * just a friendly reference point (8h day / 40h week) for an at-a-glance ring. */
+const TARGET_HOURS_TODAY = 8;
+const TARGET_HOURS_WEEK = 40;
 
 @Component({
   selector: 'app-dashboard',
   templateUrl: 'dashboard.page.html',
   styleUrls: ['dashboard.page.scss'],
   imports: [
-    DecimalPipe,
     IonHeader,
     IonToolbar,
     IonTitle,
@@ -52,6 +57,8 @@ import { Invoice, TimeEntry } from '../../core/models';
     IonIcon,
     IonButton,
     IonBadge,
+    ProgressRingComponent,
+    NumberFlipperComponent,
   ],
 })
 export class DashboardPage implements OnInit, OnDestroy {
@@ -62,6 +69,13 @@ export class DashboardPage implements OnInit, OnDestroy {
   readonly openInvoiceCount = signal(0);
   readonly openInvoiceTotal = signal(0);
   readonly loading = signal(false);
+
+  readonly todayProgress = computed(() =>
+    Math.min(100, (this.hoursToday() / TARGET_HOURS_TODAY) * 100),
+  );
+  readonly weekProgress = computed(() =>
+    Math.min(100, (this.hoursWeek() / TARGET_HOURS_WEEK) * 100),
+  );
 
   readonly userName = computed(() => this.authService.currentUser()?.name ?? '');
   readonly greeting = computed(() => {

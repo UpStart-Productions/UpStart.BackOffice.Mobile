@@ -49,6 +49,17 @@ npm run cap:run:ios:live  # live reload on device/simulator (patches applied aut
 
 The Account tab shows the current `v{version} (build)` from `src/app-version.json`. A `post-merge` git hook (installed via `npm run setup:git-hooks`) auto-bumps the patch version on every merge to `main`.
 
+## UI polish from UpStart.MobileComponents
+
+A handful of components from `UpStart.MobileComponents` were ported into `src/app/shared/ui/` and applied across the app:
+
+- **`progress-ring`** — used on the Dashboard for today's/this week's hours (SVG ring, animated). Dropped the original's gradient-color option as unneeded; defaults to `var(--ion-color-primary)`.
+- **`number-flipper`** — animating odometer-style digits, used for hours and the open-invoice total on the Dashboard. Extended to support decimals (original was whole-numbers only) and removed a truncation behavior that would have silently shrunk large currency values.
+- **`button-bar`** — pill-style segmented control, replacing `ion-segment` on the Invoices status filter and the Expenses period filter. Re-themed from the source's solid-purple bar to a neutral track with a white pill and violet label, and added a `selectedValue` input for controlled selection.
+- **Quick-action FAB** — adapted, not ported directly. The source's `tabs-fab` overlays a raised button in the tab bar itself; with 6 tabs already in this app's bar that didn't have a safe place to sit, so it's implemented as a per-page FAB (Clients and Invoices lists) opening an action sheet with "Start timer" / "Snap a receipt" shortcuts, via a shared `QuickActionsService`.
+
+Skipped as not applicable here: `avatar-picker`, `feelings`, `video-header`, `gamification` (consumer/wellness-app specific), `date-scroller`/`calendar`/`weekday-picker`/`color-picker` (no matching feature, and the calendar depends on moment.js which wasn't worth adding), `about-modal` (fully branded content as-is). `progress-line-chart`, `share-sheet`, `rich-text-editor`, and `pdf-export` weren't needed for this pass but are worth a look if the app grows reporting or sharing features.
+
 ## Notes
 
 - Sign-in uses your existing UpStart Back Office staff account (e.g. `jeff@heyupstart.com`) — same Cognito user pool as the admin app, so the same password works.

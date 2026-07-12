@@ -2,6 +2,14 @@
   <ion-toolbar>
     <ion-title>Expenses</ion-title>
   </ion-toolbar>
+  <ion-toolbar>
+    <app-button-bar
+      class="filter-bar"
+      [config]="periodConfig"
+      [selectedValue]="period()"
+      (buttonSelectedEvent)="onPeriodChange($event)"
+    ></app-button-bar>
+  </ion-toolbar>
 </ion-header>
 
 <ion-content>
@@ -18,7 +26,7 @@
   @if (!loading() && expenses().length === 0) {
     <div class="empty-state">
       <ion-icon name="receipt-outline"></ion-icon>
-      <p>No expenses in the last 6 months.</p>
+      <p>No expenses in this period.</p>
     </div>
   }
 

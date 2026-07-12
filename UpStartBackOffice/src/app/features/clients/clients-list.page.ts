@@ -15,11 +15,14 @@ import {
   IonNote,
   IonIcon,
   IonSpinner,
+  IonFab,
+  IonFabButton,
 } from '@ionic/angular/standalone';
 import { addIcons } from 'ionicons';
-import { businessOutline, chevronForwardOutline } from 'ionicons/icons';
+import { businessOutline, chevronForwardOutline, flashOutline } from 'ionicons/icons';
 import { ClientsService } from '../../core/clients.service';
 import { Client } from '../../core/models';
+import { QuickActionsService } from '../../core/quick-actions.service';
 
 @Component({
   selector: 'app-clients-list',
@@ -41,6 +44,8 @@ import { Client } from '../../core/models';
     IonNote,
     IonIcon,
     IonSpinner,
+    IonFab,
+    IonFabButton,
   ],
 })
 export class ClientsListPage implements OnInit {
@@ -60,8 +65,11 @@ export class ClientsListPage implements OnInit {
     );
   });
 
-  constructor(private readonly clientsService: ClientsService) {
-    addIcons({ businessOutline, chevronForwardOutline });
+  constructor(
+    private readonly clientsService: ClientsService,
+    private readonly quickActions: QuickActionsService,
+  ) {
+    addIcons({ businessOutline, chevronForwardOutline, flashOutline });
   }
 
   ngOnInit(): void {
@@ -81,5 +89,9 @@ export class ClientsListPage implements OnInit {
         event?.target.complete();
       },
     });
+  }
+
+  openQuickActions(): void {
+    this.quickActions.present();
   }
 }

@@ -35,12 +35,21 @@ import { AuthService } from '../../core/auth.service';
 import { ExpensesService } from '../../core/expenses.service';
 import { Expense } from '../../core/models';
 import { resolveAssetUrl } from '../../core/asset-url.util';
+import { ButtonBarComponent, ButtonBarConfig } from '../../shared/ui/button-bar.component';
 
 interface MonthGroup {
   label: string;
   expenses: Expense[];
   total: number;
 }
+
+type PeriodValue = '1M' | '3M' | '6M' | 'ALL';
+
+const PERIOD_DAYS: Record<Exclude<PeriodValue, 'ALL'>, number> = {
+  '1M': 30,
+  '3M': 90,
+  '6M': 180,
+};
 
 @Component({
   selector: 'app-expenses-list',
@@ -69,11 +78,22 @@ interface MonthGroup {
     IonThumbnail,
     IonBadge,
     IonSpinner,
+    ButtonBarComponent,
   ],
 })
 export class ExpensesListPage implements OnInit {
   readonly expenses = signal<Expense[]>([]);
   readonly loading = signal(false);
+  readonly period = signal<PeriodValue>('3M');
+
+  readonly periodConfig: ButtonBarConfig<PeriodValue> = {
+    buttons: [
+      { label: '1 Month', value: '1M' },
+      { label: '3 Months', value: '3M' },
+      { label: '6 Months', value: '6M' },
+      { label: 'All', value: 'ALL' },
+    ],
+  };
 
   readonly monthGroups = computed<MonthGroup[]>(() => this.groupByMonth(this.expenses()));
 
@@ -93,14 +113,24 @@ export class ExpensesListPage implements OnInit {
     this.load();
   }
 
+  onPeriodChange(value: PeriodValue): void {
+    this.period.set(value);
+    this.load();
+  }
+
   load(event?: { target: { complete: () => void } }): void {
     this.loading.set(true);
     const userId = this.authService.currentUser()?.id;
-    const from = new Date();
-    from.setDate(from.getDate() - 180);
-    from.setHours(0, 0, 0, 0);
+    const period = this.period();
+    let from: string | undefined;
+    if (period !== 'ALL') {
+      const fromDate = new Date();
+      fromDate.setDate(fromDate.getDate() - PERIOD_DAYS[period]);
+      fromDate.setHours(0, 0, 0, 0);
+      from = fromDate.toISOString();
+    }
 
-    this.expensesService.list({ userId, from: from.toISOString() }).subscribe({
+    this.expensesService.list({ userId, from }).subscribe({
       next: (expenses) => {
         this.expenses.set(expenses);
         this.loading.set(false);

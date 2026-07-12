@@ -9,19 +9,21 @@ import {
   IonContent,
   IonRefresher,
   IonRefresherContent,
-  IonSegment,
-  IonSegmentButton,
   IonLabel,
   IonList,
   IonItem,
   IonBadge,
   IonIcon,
   IonSpinner,
+  IonFab,
+  IonFabButton,
 } from '@ionic/angular/standalone';
 import { addIcons } from 'ionicons';
-import { documentTextOutline } from 'ionicons/icons';
+import { documentTextOutline, flashOutline } from 'ionicons/icons';
 import { InvoicesService } from '../../core/invoices.service';
 import { Invoice, InvoiceStatus } from '../../core/models';
+import { ButtonBarComponent, ButtonBarConfig } from '../../shared/ui/button-bar.component';
+import { QuickActionsService } from '../../core/quick-actions.service';
 
 type FilterValue = 'ALL' | InvoiceStatus;
 
@@ -39,14 +41,15 @@ type FilterValue = 'ALL' | InvoiceStatus;
     IonContent,
     IonRefresher,
     IonRefresherContent,
-    IonSegment,
-    IonSegmentButton,
     IonLabel,
     IonList,
     IonItem,
     IonBadge,
     IonIcon,
     IonSpinner,
+    IonFab,
+    IonFabButton,
+    ButtonBarComponent,
   ],
 })
 export class InvoicesListPage implements OnInit {
@@ -54,14 +57,27 @@ export class InvoicesListPage implements OnInit {
   readonly loading = signal(false);
   filter = signal<FilterValue>('ALL');
 
+  readonly filterConfig: ButtonBarConfig<FilterValue> = {
+    buttons: [
+      { label: 'All', value: 'ALL' },
+      { label: 'Draft', value: 'DRAFT' },
+      { label: 'Sent', value: 'SENT' },
+      { label: 'Paid', value: 'PAID' },
+      { label: 'Void', value: 'VOID' },
+    ],
+  };
+
   readonly filteredInvoices = computed(() => {
     const f = this.filter();
     const list = this.invoices();
     return f === 'ALL' ? list : list.filter((i) => i.status === f);
   });
 
-  constructor(private readonly invoicesService: InvoicesService) {
-    addIcons({ documentTextOutline });
+  constructor(
+    private readonly invoicesService: InvoicesService,
+    private readonly quickActions: QuickActionsService,
+  ) {
+    addIcons({ documentTextOutline, flashOutline });
   }
 
   ngOnInit(): void {
@@ -89,6 +105,10 @@ export class InvoicesListPage implements OnInit {
 
   onFilterChange(value: FilterValue): void {
     this.filter.set(value);
+  }
+
+  openQuickActions(): void {
+    this.quickActions.present();
   }
 
   statusColor(status: InvoiceStatus): string {

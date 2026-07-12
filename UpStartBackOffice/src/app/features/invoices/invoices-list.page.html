@@ -3,13 +3,12 @@
     <ion-title>Invoices</ion-title>
   </ion-toolbar>
   <ion-toolbar>
-    <ion-segment [value]="filter()" (ionChange)="onFilterChange($any($event.detail.value))" scrollable>
-      <ion-segment-button value="ALL"><ion-label>All</ion-label></ion-segment-button>
-      <ion-segment-button value="DRAFT"><ion-label>Draft</ion-label></ion-segment-button>
-      <ion-segment-button value="SENT"><ion-label>Sent</ion-label></ion-segment-button>
-      <ion-segment-button value="PAID"><ion-label>Paid</ion-label></ion-segment-button>
-      <ion-segment-button value="VOID"><ion-label>Void</ion-label></ion-segment-button>
-    </ion-segment>
+    <app-button-bar
+      class="filter-bar"
+      [config]="filterConfig"
+      [selectedValue]="filter()"
+      (buttonSelectedEvent)="onFilterChange($event)"
+    ></app-button-bar>
   </ion-toolbar>
 </ion-header>
 
@@ -45,4 +44,10 @@
       </ion-item>
     }
   </ion-list>
+
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+    <ion-fab-button color="secondary" (click)="openQuickActions()">
+      <ion-icon name="flash-outline"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
 </ion-content>
