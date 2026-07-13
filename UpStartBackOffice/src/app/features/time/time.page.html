@@ -2,12 +2,55 @@
   <ion-toolbar>
     <ion-title>Time</ion-title>
   </ion-toolbar>
+  <ion-toolbar>
+    <div class="week-nav">
+      <button type="button" class="date-pill" (click)="jumpToToday()">
+        {{ selectedDateLabel() }}
+      </button>
+      <div class="week-nav-actions">
+        <ion-button id="calendar-trigger" fill="clear" size="small">
+          <ion-icon slot="icon-only" name="calendar-outline"></ion-icon>
+        </ion-button>
+        <ion-button fill="clear" size="small" (click)="goToPreviousWeek()">
+          <ion-icon slot="icon-only" name="chevron-back-outline"></ion-icon>
+        </ion-button>
+        <ion-button fill="clear" size="small" (click)="goToNextWeek()">
+          <ion-icon slot="icon-only" name="chevron-forward-outline"></ion-icon>
+        </ion-button>
+      </div>
+    </div>
+  </ion-toolbar>
 </ion-header>
 
+<ion-modal #calendarModal trigger="calendar-trigger" [initialBreakpoint]="0.62" [breakpoints]="[0, 0.62]">
+  <ng-template>
+    <div class="calendar-sheet">
+      <ion-datetime
+        presentation="date"
+        [firstDayOfWeek]="1"
+        [value]="selectedDate()"
+        (ionChange)="onCalendarDateChange($event)"
+      ></ion-datetime>
+    </div>
+  </ng-template>
+</ion-modal>
+
 <ion-content>
-  <ion-refresher slot="fixed" (ionRefresh)="load($event)">
+  <ion-refresher slot="fixed" (ionRefresh)="refresh($event)">
     <ion-refresher-content></ion-refresher-content>
   </ion-refresher>
+
+  <app-date-scroller
+    [weekStart]="visibleWeekStart()"
+    [selectedDate]="selectedDate()"
+    [dayTotals]="dayTotals()"
+    (dateSelectedEvent)="onDateSelected($event)"
+    (weekSwipeEvent)="onWeekSwipe($event)"
+  ></app-date-scroller>
+
+  <div class="week-total-row">
+    <span>Week total: {{ formatHM(weekTotalMin()) }}</span>
+  </div>
 
   @if (runningEntry(); as running) {
     <ion-card class="running-card">
@@ -94,21 +137,14 @@
     </ion-card>
   }
 
-  @if (dayGroups().length === 0 && !loading()) {
+  @if (selectedDayEntries().length === 0 && !loading()) {
     <div class="empty-state">
       <ion-icon name="time-outline"></ion-icon>
-      <p>No time entries in the last two weeks.</p>
+      <p>No time entries on {{ selectedDateLabel() }}.</p>
     </div>
-  }
-
-  @for (group of dayGroups(); track group.label) {
+  } @else {
     <ion-list>
-      <ion-item lines="full" class="day-header">
-        <ion-label>{{ group.label }}</ion-label>
-        <ion-note slot="end">{{ formatMinutes(group.totalMin) }}</ion-note>
-      </ion-item>
-
-      @for (entry of group.entries; track entry.id) {
+      @for (entry of selectedDayEntries(); track entry.id) {
         <ion-item-sliding #slidingItem>
           <ion-item lines="inset">
             <ion-label>
@@ -120,7 +156,7 @@
                 <p class="desc">{{ entry.description }}</p>
               }
             </ion-label>
-            <ion-note slot="end">{{ formatMinutes(entry.durationMin) }}</ion-note>
+            <ion-note slot="end">{{ formatHM(entry.durationMin) }}</ion-note>
           </ion-item>
           <ion-item-options side="end">
             <ion-item-option color="danger" (click)="deleteEntry(entry, slidingItem)">

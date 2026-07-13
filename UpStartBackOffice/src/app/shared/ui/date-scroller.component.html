@@ -1,0 +1,11 @@
+<div class="week-strip" #stripEl (touchstart)="onTouchStart($event)" (touchend)="onTouchEnd($event)">
+  @for (day of days; track day.date) {
+    <button type="button" class="day" [class.selected]="day.isSelected" (click)="select(day)">
+      <span class="day-name">{{ day.dayName }}</span>
+      <span class="day-number" [class.today]="day.isToday" [class.selected]="day.isSelected">
+        {{ day.dayNumber }}
+      </span>
+      <span class="day-total" [class.has-time]="day.totalMin > 0">{{ formatHM(day.totalMin) }}</span>
+    </button>
+  }
+</div>

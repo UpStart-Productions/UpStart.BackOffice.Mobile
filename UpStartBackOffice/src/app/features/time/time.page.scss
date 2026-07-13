@@ -1,3 +1,45 @@
+.week-nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: 4px 4px 8px;
+}
+
+.date-pill {
+  border: 1px solid var(--ion-color-step-150, #e0e0e0);
+  background: var(--ion-color-step-50, #f6f6f5);
+  color: var(--ion-text-color, #1d2b36);
+  border-radius: 999px;
+  padding: 6px 14px;
+  font-size: 14px;
+  font-weight: 600;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.week-nav-actions {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+}
+
+.week-total-row {
+  padding: 2px 16px 10px;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--ion-text-color, #1d2b36);
+}
+
+.calendar-sheet {
+  padding: 8px 16px 24px;
+  display: flex;
+  justify-content: center;
+
+  ion-datetime {
+    width: 100%;
+  }
+}
+
 .running-card {
   --background: var(--ion-color-secondary);
   color: #ffffff;
@@ -42,17 +84,14 @@
   margin: 12px;
 }
 
-.picker-item {
-  --padding-start: 0;
+app-date-scroller {
+  display: block;
   margin-bottom: 4px;
 }
 
-.day-header {
-  --background: var(--ion-color-step-50, #f6f6f5);
-  font-weight: 600;
-  font-size: 13px;
-  text-transform: uppercase;
-  letter-spacing: 0.02em;
+.picker-item {
+  --padding-start: 0;
+  margin-bottom: 4px;
 }
 
 .desc {

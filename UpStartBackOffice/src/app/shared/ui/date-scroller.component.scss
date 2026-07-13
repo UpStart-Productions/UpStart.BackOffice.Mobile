@@ -1,0 +1,58 @@
+.week-strip {
+  display: flex;
+  padding: 4px 6px 10px;
+  touch-action: pan-y;
+}
+
+.day {
+  flex: 1 1 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  background: transparent;
+  border: none;
+  padding: 4px 0;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.day-name {
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+  color: var(--ubo-text-muted, #6b6b6b);
+}
+
+.day-number {
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  font-size: 17px;
+  font-weight: 700;
+  color: var(--ion-text-color, #1d2b36);
+}
+
+.day-number.today {
+  border: 1.5px solid var(--ion-color-primary);
+}
+
+.day-number.selected {
+  background: var(--ion-color-primary);
+  border-color: var(--ion-color-primary);
+  color: #ffffff;
+}
+
+.day-total {
+  font-size: 11px;
+  font-variant-numeric: tabular-nums;
+  color: var(--ion-color-step-400, #a0a0a0);
+}
+
+.day-total.has-time {
+  color: var(--ion-color-primary);
+  font-weight: 600;
+}
