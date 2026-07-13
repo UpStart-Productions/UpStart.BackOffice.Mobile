@@ -1,7 +1,7 @@
 import type { CapacitorConfig } from '@capacitor/cli';
 
 const config: CapacitorConfig = {
-  appId: 'com.heyupstart.backoffice',
+  appId: 'com.upstartbackoffice.app',
   appName: 'UpStart Back Office',
   webDir: 'www',
 };

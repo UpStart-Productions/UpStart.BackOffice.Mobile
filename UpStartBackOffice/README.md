@@ -19,12 +19,16 @@ Auth is Cognito username/password (SRP), same flow as `admin/src/app/core/cognit
 npm install
 ```
 
-## Running against your local dev API
+## Which API the app talks to
+
+Both `environment.ts` (used by `ios:sync:dev`, live reload, and default Xcode builds) and `environment.prod.ts` (used by `ios:sync:prod` and `ship:ios`) point at production — `https://api.heyupstart.com/api` — so there's nothing extra to configure day-to-day.
+
+To point at your local dev API instead (e.g. testing an unreleased backend change):
 
 1. In `UpStart.BackOffice`, run `npm run dev` (API on `http://localhost:3001`).
 2. The API's `.env` `CORS_ORIGINS` already includes `capacitor://localhost` and `ionic://localhost` so the app's requests aren't blocked — if you ever regenerate `.env` from `.env.example`, keep those two origins in the list.
-3. **iOS Simulator**: `src/environments/environment.ts` already points at `http://localhost:3001/api` and works as-is, since the simulator shares your Mac's network stack.
-4. **Physical iPhone**: replace `localhost` in `environment.ts` with your Mac's LAN IP (same Wi-Fi network required), e.g. `http://192.168.1.42:3001/api`. Find it via System Settings → Wi-Fi → Details, or `ipconfig getifaddr en0` in Terminal.
+3. In `src/environments/environment.ts`, swap `apiBaseUrl` back to `http://localhost:3001/api` (iOS Simulator — shares your Mac's network stack) or `http://<mac-lan-ip>:3001/api` (physical iPhone, same Wi-Fi network; find your Mac's IP via System Settings → Wi-Fi → Details, or `ipconfig getifaddr en0`).
+4. Remember to swap it back before shipping or testing against real data.
 
 ## Building for iOS
 

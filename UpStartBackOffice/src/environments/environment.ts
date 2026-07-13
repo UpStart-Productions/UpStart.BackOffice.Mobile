@@ -4,12 +4,13 @@
 
 export const environment = {
   production: false,
-  // iOS Simulator: 'localhost' resolves to your Mac, so this works as-is.
-  // Physical device: replace 'localhost' with your Mac's LAN IP (System
-  // Settings > Wi-Fi > Details, or `ipconfig getifaddr en0` in Terminal),
-  // e.g. 'http://192.168.1.42:3001/api'. Your phone and Mac must be on the
-  // same network and `npm run dev` must be running in UpStart.BackOffice.
-  apiBaseUrl: 'http://localhost:3001/api',
+  // Pointed at production so simulator, live-reload, and device builds all
+  // hit the real API — no need to run `npm run dev` in UpStart.BackOffice
+  // or fuss with LAN IPs for a physical device. To go back to the local API
+  // for a specific debugging session, swap this back to
+  // 'http://localhost:3001/api' (simulator) or 'http://<mac-lan-ip>:3001/api'
+  // (physical device).
+  apiBaseUrl: 'https://api.heyupstart.com/api',
   cognito: {
     userPoolId: 'us-west-2_IlJRXdK5X',
     userPoolClientId: '5oi5vfbt574mqect5psnqkqabn',
